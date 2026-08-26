@@ -18,6 +18,7 @@ requirements:
   host:
     - python
     - pip
+    - wheel
     - setuptools
   run:
     - python
@@ -51,6 +52,11 @@ about:
   license_family: Apache
   license_file: LICENSE
   summary: Client library for LSEG Data Platform APIs
+  description: |
+    The LSEG Data Library for Python provides a simplified interface for accessing LSEG Data
+    Platform content including real-time streaming data, historical data, news, and reference
+    data from the London Stock Exchange Group.
+  dev_url: https://github.com/LSEG-API-Samples/Example.DataLibrary.Python
   doc_url: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
 
 extra:
