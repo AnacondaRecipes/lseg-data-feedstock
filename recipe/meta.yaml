@@ -1,45 +1,61 @@
-{% set name = "<PLEASE ADD PKG NAME>" %}
-{% set version = "<PLEASE ADD PKG VERSION>" %}
+{% set name = "lseg-data" %}
+{% set version = "2.1.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: <sha256>
+  url: https://pypi.io/packages/source/l/lseg-data/lseg_data-{{ version }}.tar.gz
+  sha256: 67f126b5132c8d6e00d51542baf88654ba21199252d841c7b1e28b20f09d8d62
 
 build:
   number: 0
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<38]
 
 requirements:
   host:
     - python
     - pip
+    - setuptools
   run:
     - python
+    - appdirs >=1.4.4,<2
+    - pyee >=9.0.4,<=12.0.0
+    - httpx >=0.18.0,<0.28
+    - httpcore <1.1.0
+    - numpy
+    - pandas >=2.0,<3.0
+    - python-dateutil
+    - requests
+    - scipy
+    - tenacity
+    - watchdog
+    - websocket-client >=1.5,!=1.5.0,!=1.5.2
+    - pyhumps >=3.0.2,<4.0.0
+    - jinja2 >=3.0.3,<4.0.0
+    - simplejson
 
 test:
-  imports:
-    - {{ name.replace('-', '.') }}
   requires:
     - pip
+  imports:
+    - lseg.data
   commands:
     - pip check
 
 about:
-  home: <PLEASE ADD HOME URL>
-  summary: <PLEASE ADD SUMMARY>
-  description: |
-    <PLEASE ADD DESCRIPTION>
-  license: <PLEASE ADD LICENSE>
-  license_family: <PLEASE ADD LICENSE_FAMILY>
-  license_file: <PLEASE_ADD_LICENSE_FILE>
-  dev_url: <PLEASE ADD DEV URL>
-  doc_url: <PLEASE ADD DOC URL>
+  home: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: Client library for LSEG Data Platform APIs
+  doc_url: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
 
 extra:
+  anaconda-services:
+    ref:
+      - https://anaconda.zendesk.com/agent/tickets/109074
   recipe-maintainers:
-    - Jrice1317
+    - amaloney
