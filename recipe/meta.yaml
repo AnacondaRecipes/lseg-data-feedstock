@@ -29,7 +29,7 @@ requirements:
     - httpx <0.28,>=0.18.0
     - jinja2
     - numpy
-    - pandas
+    - pandas >=2.0,<3.0
     - pyee <=12,>=9.0.4
     - services::pyhumps >=3.8
     - python
