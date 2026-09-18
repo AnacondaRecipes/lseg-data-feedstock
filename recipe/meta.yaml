@@ -6,50 +6,53 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/l/lseg-data/lseg_data-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace("-", "_") }}-{{ version }}.tar.gz
   sha256: 67f126b5132c8d6e00d51542baf88654ba21199252d841c7b1e28b20f09d8d62
 
 build:
-  number: 0
-  skip: true  # [py<310]
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<39]
+  script_env:
+    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}
 
 requirements:
   host:
-    - python
     - pip
-    - wheel
-    - setuptools
-  run:
     - python
-    - appdirs >=1.4.4,<2
-    - pyee >=9.0.4,<=12.0.0
-    - httpx >=0.18.0,<0.28
-    - httpcore <1.1.0
+    - setuptools
+    - setuptools-scm
+    - wheel
+  run:
+    - appdirs
+    - httpcore
+    - httpx
+    - jinja2
     - numpy
-    - pandas >=2.0,<3.0
+    - pandas
+    - pyee
+    - services::pyhumps >=3.8
+    - python
     - python-dateutil
     - requests
     - scipy
+    - simplejson
     - tenacity
     - watchdog
-    - websocket-client >=1.5,!=1.5.0,!=1.5.2
-    - pyhumps >=3.0.2,<4.0.0
-    - jinja2 >=3.0.3,<4.0.0
-    - simplejson
+    - websocket-client
 
 test:
   requires:
     - pip
   imports:
-    - lseg.data
+    - lseg_data
   commands:
     - pip check
 
 about:
   home: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
   license: Apache-2.0
-  license_family: Apache
+  license_family: APACHE
   license_file: LICENSE
   summary: Client library for LSEG Data Platform APIs
   description: |
@@ -64,4 +67,4 @@ extra:
     ref:
       - https://anaconda.zendesk.com/agent/tickets/109074
   recipe-maintainers:
-    - amaloney
+    - anaconda-services

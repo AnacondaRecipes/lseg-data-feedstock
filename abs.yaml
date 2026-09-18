@@ -1,5 +1,12 @@
-aggregate_check: false
-upload_channels:
-  - services
+name: lseg-data
+version: 1
+
+build:
+  script: conda-build recipe/
+
 channels:
   - defaults
+  - services
+
+upload:
+  channel: services
