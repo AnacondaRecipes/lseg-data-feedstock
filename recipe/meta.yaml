@@ -45,7 +45,7 @@ test:
   requires:
     - pip
   imports:
-    - lseg_data
+    - lseg.data
   commands:
     - pip check
 
