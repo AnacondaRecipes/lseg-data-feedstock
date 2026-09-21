@@ -1,45 +1,70 @@
-{% set name = "<PLEASE ADD PKG NAME>" %}
-{% set version = "<PLEASE ADD PKG VERSION>" %}
+{% set name = "lseg-data" %}
+{% set version = "2.1.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: <sha256>
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace("-", "_") }}-{{ version }}.tar.gz
+  sha256: 67f126b5132c8d6e00d51542baf88654ba21199252d841c7b1e28b20f09d8d62
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<38]
+  skip: true # [py>313]
+  script_env:
+    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}
 
 requirements:
   host:
-    - python
     - pip
-  run:
     - python
+    - setuptools
+    - setuptools-scm
+    - wheel
+  run:
+    - appdirs
+    - httpcore
+    - httpx <0.28,>=0.18.0
+    - jinja2
+    - numpy
+    - pandas >=2.0,<3.0
+    - services::pyee <=12,>=9.0.4
+    - services::pyhumps >=3.8
+    - python
+    - python-dateutil
+    - requests
+    - scipy
+    - simplejson
+    - tenacity
+    - watchdog
+    - websocket-client
 
 test:
-  imports:
-    - {{ name.replace('-', '.') }}
   requires:
     - pip
+  imports:
+    - lseg.data
   commands:
     - pip check
 
 about:
-  home: <PLEASE ADD HOME URL>
-  summary: <PLEASE ADD SUMMARY>
+  home: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
+  license: Apache-2.0
+  license_family: APACHE
+  license_file: LICENSE
+  summary: Client library for LSEG Data Platform APIs
   description: |
-    <PLEASE ADD DESCRIPTION>
-  license: <PLEASE ADD LICENSE>
-  license_family: <PLEASE ADD LICENSE_FAMILY>
-  license_file: <PLEASE_ADD_LICENSE_FILE>
-  dev_url: <PLEASE ADD DEV URL>
-  doc_url: <PLEASE ADD DOC URL>
+    The LSEG Data Library for Python provides a simplified interface for accessing LSEG Data
+    Platform content including real-time streaming data, historical data, news, and reference
+    data from the London Stock Exchange Group.
+  dev_url: https://github.com/LSEG-API-Samples/Example.DataLibrary.Python
+  doc_url: https://developers.lseg.com/en/api-catalog/lseg-data-platform/lseg-data-library-for-python
 
 extra:
+  anaconda-services:
+    ref:
+      - https://anaconda.zendesk.com/agent/tickets/109074
   recipe-maintainers:
-    - Jrice1317
+    - anaconda-services
