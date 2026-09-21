@@ -30,7 +30,7 @@ requirements:
     - jinja2
     - numpy
     - pandas >=2.0,<3.0
-    - pyee <=12,>=9.0.4
+    - services::pyee <=12,>=9.0.4
     - services::pyhumps >=3.8
     - python
     - python-dateutil
